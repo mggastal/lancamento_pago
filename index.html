@@ -3,36 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Lançamento Pago</title>
+<title>Guia Completo de Lançamento Pago</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #0b0f19;
-  --card: #121826;
-  --border: rgba(255,255,255,0.06);
-  --text: #f1f5ff;
-  --muted: #7c8aa5;
+  --bg:#0b0f19;
+  --card:#121826;
+  --border:rgba(255,255,255,0.06);
+  --text:#f1f5ff;
+  --muted:#7c8aa5;
 
-  --purple: #8b5cf6;
-  --green: #10b981;
-  --orange: #f59e0b;
-  --blue: #3b82f6;
-  --red: #ef4444;
-  --pink: #ec4899;
+  --purple:#8b5cf6;
+  --green:#10b981;
+  --orange:#f59e0b;
+  --blue:#3b82f6;
+  --red:#ef4444;
+  --pink:#ec4899;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
   line-height:1.6;
 }
 
-/* HERO */
 .hero{
   padding:80px 24px 40px;
   max-width:1100px;
@@ -41,16 +40,13 @@ body{
 
 .hero h1{
   font-size:42px;
-  font-weight:700;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .hero p{
   color:var(--muted);
-  max-width:600px;
 }
 
-/* SECTIONS */
 .section{
   max-width:1100px;
   margin:60px auto;
@@ -58,7 +54,6 @@ body{
 }
 
 .section h2{
-  font-size:24px;
   margin-bottom:20px;
 }
 
@@ -70,14 +65,12 @@ body{
   margin-bottom:16px;
 }
 
-/* GRID */
 .grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:16px;
 }
 
-/* COLORS */
 .purple{border-left:4px solid var(--purple);}
 .green{border-left:4px solid var(--green);}
 .orange{border-left:4px solid var(--orange);}
@@ -85,17 +78,23 @@ body{
 .red{border-left:4px solid var(--red);}
 .pink{border-left:4px solid var(--pink);}
 
-/* LIST */
-ul{
-  padding-left:18px;
+ul{padding-left:18px;}
+
+table{
+  width:100%;
+  margin-top:10px;
+  border-collapse:collapse;
 }
 
-/* FOOTER */
+td{
+  padding:6px 4px;
+  border-bottom:1px solid var(--border);
+}
+
 .footer{
   text-align:center;
   padding:40px;
   color:var(--muted);
-  font-size:12px;
 }
 </style>
 </head>
@@ -103,158 +102,191 @@ ul{
 <body>
 
 <div class="hero">
-  <h1>Guia Completo de Lançamento Pago</h1>
-  <p>Do zero à escala: como usar tráfego pago para adquirir, qualificar e converter clientes com previsibilidade.</p>
+<h1>Guia Completo de Lançamento Pago</h1>
+<p>Do zero à escala com previsibilidade usando tráfego pago.</p>
 </div>
 
 <!-- FUNDAMENTOS -->
 <div class="section">
-  <h2>Fundamentos</h2>
+<h2>Fundamentos</h2>
 
-  <div class="card purple">
-    <strong>O que é lançamento pago</strong>
-    <p>Um modelo de aquisição onde você usa tráfego pago para gerar leads e converter através de um evento ao vivo ou oferta estruturada.</p>
-  </div>
-
-  <div class="card purple">
-    <strong>O que NÃO é</strong>
-    <p>Não é um modelo focado em lucro direto imediato. O objetivo principal é aquisição e construção de base.</p>
-  </div>
-
-  <div class="card purple">
-    <strong>Alinhamento de expectativa</strong>
-    <ul>
-      <li>Foco em CAC e LTV</li>
-      <li>Lucro não é prioridade inicial</li>
-      <li>Construção de ativo (base)</li>
-    </ul>
-  </div>
+<div class="card purple">
+<strong>O que é</strong>
+<p>Um funil de aquisição com tráfego pago, normalmente com low ticket + evento ao vivo.</p>
 </div>
 
-<!-- POR QUE -->
-<div class="section">
-  <h2>Por que usar lançamento pago</h2>
+<div class="card purple">
+<strong>O que NÃO é</strong>
+<ul>
+<li>Não é focado em lucro imediato</li>
+<li>Não é só venda direta</li>
+<li>Não substitui backend</li>
+</ul>
+</div>
 
-  <div class="grid">
-    <div class="card green">
-      <strong>Aquisição previsível</strong>
-      <p>Você controla o volume de leads.</p>
-    </div>
+<div class="card purple">
+<strong>Alinhamento</strong>
+<ul>
+<li>Promessa</li>
+<li>Oferta</li>
+<li>Anúncios</li>
+<li>Página</li>
+<li>Dor do público</li>
+</ul>
+</div>
 
-    <div class="card green">
-      <strong>Qualificação</strong>
-      <p>Lead entra já comprometido.</p>
-    </div>
-
-    <div class="card green">
-      <strong>Retenção</strong>
-      <p>Evento ao vivo aumenta engajamento.</p>
-    </div>
-
-    <div class="card green">
-      <strong>LTV maior</strong>
-      <p>Base construída gera receita futura.</p>
-    </div>
-  </div>
 </div>
 
 <!-- PLANEJAMENTO -->
 <div class="section">
-  <h2>Planejamento</h2>
+<h2>Planejamento</h2>
 
-  <div class="card orange">
-    <ul>
-      <li>Produto (low ticket)</li>
-      <li>Oferta</li>
-      <li>Página de vendas</li>
-      <li>Tráfego</li>
-      <li>Automação</li>
-    </ul>
-  </div>
+<div class="card green">
+<ul>
+<li>Calendário</li>
+<li>Produto (low ticket)</li>
+<li>Order bump</li>
+<li>Página de vendas</li>
+<li>Automação</li>
+<li>Anúncios</li>
+<li>Tráfego</li>
+</ul>
 </div>
 
-<!-- PAGINA -->
-<div class="section">
-  <h2>Página de Vendas</h2>
+</div>
 
-  <div class="card orange">
-    <ul>
-      <li>Promessa forte</li>
-      <li>Conexão com público</li>
-      <li>Estrutura da entrega</li>
-      <li>Depoimentos</li>
-      <li>Oferta clara</li>
-      <li>Garantia</li>
-    </ul>
-  </div>
+<!-- PÁGINA -->
+<div class="section">
+<h2>Página de Vendas</h2>
+
+<div class="card orange">
+<ul>
+<li>Promessa clara</li>
+<li>Diferença gratuito vs pago</li>
+<li>Conexão com público</li>
+<li>Estrutura de entrega</li>
+<li>Provas</li>
+<li>Oferta</li>
+<li>Garantia</li>
+<li>FAQ</li>
+</ul>
+</div>
+
 </div>
 
 <!-- CAMPANHAS -->
 <div class="section">
-  <h2>Estrutura de Campanhas</h2>
+<h2>Estrutura de Campanhas</h2>
 
-  <div class="grid">
-    <div class="card blue">
-      <strong>Teste</strong>
-      <p>Validação de criativos e públicos.</p>
-    </div>
+<div class="card blue">
+<ul>
+<li>ABO para teste</li>
+<li>CBO para escala</li>
+<li>Testar criativos constantemente</li>
+<li>Separar público quente e frio</li>
+<li>Escalar vencedores</li>
+</ul>
+</div>
 
-    <div class="card blue">
-      <strong>Escala</strong>
-      <p>Aumentar investimento nos vencedores.</p>
-    </div>
-
-    <div class="card blue">
-      <strong>Públicos</strong>
-      <p>Quente, morno e frio.</p>
-    </div>
-  </div>
 </div>
 
 <!-- OTIMIZAÇÃO -->
 <div class="section">
-  <h2>Otimização</h2>
+<h2>Otimização</h2>
 
-  <div class="grid">
-    <div class="card red">
-      <strong>Criativos</strong>
-    </div>
-
-    <div class="card red">
-      <strong>Públicos</strong>
-    </div>
-
-    <div class="card red">
-      <strong>Página</strong>
-    </div>
-
-    <div class="card red">
-      <strong>Funil</strong>
-    </div>
-  </div>
+<div class="grid">
+<div class="card red"><strong>Criativos</strong></div>
+<div class="card red"><strong>Público</strong></div>
+<div class="card red"><strong>Página</strong></div>
+<div class="card red"><strong>Funil</strong></div>
 </div>
 
-<!-- METRICAS -->
+<div class="card red">
+<ul>
+<li>Testar novos criativos diariamente</li>
+<li>Analisar CTR e CPM</li>
+<li>Melhorar promessa</li>
+<li>Testar páginas diferentes</li>
+<li>Melhorar oferta</li>
+</ul>
+</div>
+
+</div>
+
+<!-- MÉTRICAS -->
 <div class="section">
-  <h2>Métricas e Benchmarks</h2>
+<h2>Métricas e Benchmarks</h2>
 
-  <div class="grid">
-    <div class="card pink">
-      <strong>CTR</strong>
-    </div>
+<div class="card pink">
+<strong>Conversão Checkout</strong>
+<table>
+<tr><td>40%+</td><td>Ótimo</td></tr>
+<tr><td>32%–39%</td><td>Muito bom</td></tr>
+<tr><td>26%–31%</td><td>Bom</td></tr>
+<tr><td>21%–25%</td><td>OK</td></tr>
+<tr><td>18%–20%</td><td>Ruim</td></tr>
+<tr><td>Até 17%</td><td>Muito ruim</td></tr>
+</table>
+</div>
 
-    <div class="card pink">
-      <strong>CPM</strong>
-    </div>
+<div class="card pink">
+<strong>CTR</strong>
+<table>
+<tr><td>1.8%+</td><td>Excelente</td></tr>
+<tr><td>1.5%–1.7%</td><td>Ótimo</td></tr>
+<tr><td>1.2%–1.4%</td><td>Muito bom</td></tr>
+<tr><td>0.9%–1.1%</td><td>Bom</td></tr>
+<tr><td>0.7%–0.8%</td><td>OK</td></tr>
+<tr><td>0.5%–0.6%</td><td>Ruim</td></tr>
+<tr><td><0.4%</td><td>Muito ruim</td></tr>
+</table>
+</div>
 
-    <div class="card pink">
-      <strong>Conversão</strong>
-    </div>
+<div class="card pink">
+<strong>CPM</strong>
+<table>
+<tr><td>R$11–20</td><td>Ótimo</td></tr>
+<tr><td>R$21–40</td><td>Muito bom</td></tr>
+<tr><td>R$41–60</td><td>Bom</td></tr>
+<tr><td>R$61–80</td><td>Difícil</td></tr>
+<tr><td>R$81+</td><td>Muito difícil</td></tr>
+</table>
+</div>
 
-    <div class="card pink">
-      <strong>CPA</strong>
-    </div>
-  </div>
+<div class="card pink">
+<strong>Connect Rate</strong>
+<table>
+<tr><td>81%+</td><td>Ótimo</td></tr>
+<tr><td>75–80%</td><td>Muito bom</td></tr>
+<tr><td>69–75%</td><td>Bom</td></tr>
+<tr><td>61–68%</td><td>OK</td></tr>
+<tr><td>55–60%</td><td>Ruim</td></tr>
+<tr><td><54%</td><td>Muito ruim</td></tr>
+</table>
+</div>
+
+<div class="card pink">
+<strong>Conversão Página</strong>
+<table>
+<tr><td>8–12%</td><td>Ótimo</td></tr>
+<tr><td>7–8%</td><td>Bom</td></tr>
+<tr><td>5–7%</td><td>OK</td></tr>
+<tr><td>2–4%</td><td>Ruim</td></tr>
+</table>
+</div>
+
+<div class="card pink">
+<strong>Ticket vs Conversão</strong>
+<table>
+<tr><td>1k–1.5k</td><td>15%–20%</td></tr>
+<tr><td>1.5k–2k</td><td>10%–15%</td></tr>
+<tr><td>2k–3k</td><td>8%–10%</td></tr>
+<tr><td>3k–5k</td><td>6%–8%</td></tr>
+<tr><td>5k–10k</td><td>4%–6%</td></tr>
+<tr><td>10k+</td><td>3%–5%</td></tr>
+</table>
+</div>
+
 </div>
 
 <div class="footer">
