@@ -3,295 +3,1872 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia Completo de Lançamento Pago</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<title>Lançamento Pago — Guia Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0b0f19;
-  --card:#121826;
-  --border:rgba(255,255,255,0.06);
-  --text:#f1f5ff;
-  --muted:#7c8aa5;
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.12);
+    --text: #e8e8f0;
+    --text-muted: #6b6b80;
+    --text-dim: #3a3a50;
+    --header-bg: rgba(10,10,15,0.85);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
 
-  --purple:#8b5cf6;
-  --green:#10b981;
-  --orange:#f59e0b;
-  --blue:#3b82f6;
-  --red:#ef4444;
-  --pink:#ec4899;
-}
+    --purple: #9b72ff;
+    --purple-dim: rgba(155,114,255,0.12);
+    --purple-glow: rgba(155,114,255,0.25);
 
-*{margin:0;padding:0;box-sizing:border-box;}
+    --green: #3ecf8e;
+    --green-dim: rgba(62,207,142,0.12);
 
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-}
+    --orange: #ff8c42;
+    --orange-dim: rgba(255,140,66,0.12);
 
-.hero{
-  padding:80px 24px 40px;
-  max-width:1100px;
-  margin:auto;
-}
+    --blue: #4da6ff;
+    --blue-dim: rgba(77,166,255,0.12);
 
-.hero h1{
-  font-size:42px;
-  margin-bottom:10px;
-}
+    --red: #ff5757;
+    --red-dim: rgba(255,87,87,0.12);
 
-.hero p{
-  color:var(--muted);
-}
+    --pink: #ff6eb4;
+    --pink-dim: rgba(255,110,180,0.12);
 
-.section{
-  max-width:1100px;
-  margin:60px auto;
-  padding:0 24px;
-}
+    --sidebar-w: 260px;
+    --header-h: 60px;
+  }
 
-.section h2{
-  margin-bottom:20px;
-}
+  /* LIGHT THEME */
+  html.light {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f0f0f5;
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(0,0,0,0.16);
+    --text: #111118;
+    --text-muted: #6b6b80;
+    --text-dim: #bcbccc;
+    --header-bg: rgba(245,245,247,0.88);
+    --shadow: 0 1px 4px rgba(0,0,0,0.08);
 
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:16px;
-}
+    --purple: #7c4dff;
+    --purple-dim: rgba(124,77,255,0.09);
+    --purple-glow: rgba(124,77,255,0.18);
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:16px;
-}
+    --green: #1faa6b;
+    --green-dim: rgba(31,170,107,0.09);
 
-.purple{border-left:4px solid var(--purple);}
-.green{border-left:4px solid var(--green);}
-.orange{border-left:4px solid var(--orange);}
-.blue{border-left:4px solid var(--blue);}
-.red{border-left:4px solid var(--red);}
-.pink{border-left:4px solid var(--pink);}
+    --orange: #e06b20;
+    --orange-dim: rgba(224,107,32,0.09);
 
-ul{padding-left:18px;}
+    --blue: #1a7fe0;
+    --blue-dim: rgba(26,127,224,0.09);
 
-table{
-  width:100%;
-  margin-top:10px;
-  border-collapse:collapse;
-}
+    --red: #e03030;
+    --red-dim: rgba(224,48,48,0.09);
 
-td{
-  padding:6px 4px;
-  border-bottom:1px solid var(--border);
-}
+    --pink: #d63a8e;
+    --pink-dim: rgba(214,58,142,0.09);
+  }
 
-.footer{
-  text-align:center;
-  padding:40px;
-  color:var(--muted);
-}
+  /* THEME TOGGLE SWITCH */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    flex-shrink: 0;
+  }
+
+  .theme-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    user-select: none;
+    transition: color 0.2s;
+  }
+
+  .toggle-track {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+  }
+
+  html.light .toggle-track {
+    background: #e8e8f2;
+  }
+
+  .toggle-knob {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1), background 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+  }
+
+  html.light .toggle-knob {
+    transform: translateX(20px);
+    background: var(--purple);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: var(--header-bg);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  .header-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--purple);
+    box-shadow: 0 0 12px var(--purple-glow);
+  }
+
+  .search-wrap {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  #searchInput {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px 8px 36px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #searchInput::placeholder { color: var(--text-muted); }
+  #searchInput:focus { border-color: var(--border-hover); }
+
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-sm:hover { border-color: var(--border-hover); color: var(--text); }
+
+  /* LAYOUT */
+  .layout {
+    display: flex;
+    padding-top: var(--header-h);
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    bottom: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 20px 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 8px;
+    margin-bottom: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 400;
+    border: 1px solid transparent;
+    margin-bottom: 2px;
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+  }
+
+  .nav-item.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+    border-color: var(--border);
+  }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+
+  /* MAIN */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 40px 48px;
+    max-width: 960px;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 64px;
+    scroll-margin-top: 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* TREE */
+  .tree { list-style: none; }
+
+  .tree-item {
+    position: relative;
+  }
+
+  .tree-item + .tree-item { margin-top: 2px; }
+
+  .tree-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+    border: 1px solid transparent;
+  }
+
+  .tree-row:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border);
+  }
+
+  .tree-row.has-children { cursor: pointer; }
+
+  .tree-toggle {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+    margin-top: 1px;
+    color: var(--text-dim);
+  }
+
+  .tree-row.open .tree-toggle {
+    transform: rotate(90deg);
+    color: var(--text-muted);
+  }
+
+  .tree-toggle svg { display: block; }
+
+  .tree-spacer {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tree-label {
+    flex: 1;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .tree-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  /* DEPTH LEVELS */
+  .tree-children {
+    display: none;
+    padding-left: 24px;
+    position: relative;
+    margin-top: 2px;
+  }
+
+  .tree-children.open { display: block; }
+
+  .tree-children::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0; bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  /* Depth 1 items (top level) */
+  .depth-0 > .tree-row {
+    background: var(--surface2);
+    border-color: var(--border);
+    font-weight: 500;
+  }
+
+  .depth-0 > .tree-row:hover {
+    border-color: var(--border-hover);
+  }
+
+  /* SEARCH HIGHLIGHT */
+  .highlight {
+    background: rgba(255,200,0,0.25);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  .search-hidden { display: none !important; }
+
+  /* CARDS for special content */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .mini-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all 0.2s;
+  }
+
+  .mini-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-1px);
+  }
+
+  .mini-card-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+  }
+
+  .mini-card-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* BENCHMARK TABLE */
+  .bench-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 13px;
+  }
+
+  .bench-table th {
+    text-align: left;
+    padding: 8px 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bench-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .bench-table tr:last-child td { border-bottom: none; }
+  .bench-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .status-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .status-otimo { background: rgba(62,207,142,0.15); color: #3ecf8e; }
+  .status-bom { background: rgba(77,166,255,0.15); color: #4da6ff; }
+  .status-ok { background: rgba(255,200,0,0.15); color: #ffcc00; }
+  .status-ruim { background: rgba(255,87,87,0.15); color: #ff5757; }
+  .status-lindo { background: rgba(155,114,255,0.15); color: #9b72ff; }
+
+  /* SECTION COLORS */
+  .s-purple .section-icon { background: var(--purple-dim); }
+  .s-purple .section-title { color: var(--purple); }
+  .s-purple .depth-0 > .tree-row:hover { border-color: rgba(155,114,255,0.3); }
+  .s-purple .depth-0.open > .tree-row { border-color: rgba(155,114,255,0.2); }
+
+  .s-green .section-icon { background: var(--green-dim); }
+  .s-green .section-title { color: var(--green); }
+  .s-green .depth-0 > .tree-row:hover { border-color: rgba(62,207,142,0.3); }
+  .s-green .depth-0.open > .tree-row { border-color: rgba(62,207,142,0.2); }
+
+  .s-orange .section-icon { background: var(--orange-dim); }
+  .s-orange .section-title { color: var(--orange); }
+  .s-orange .depth-0 > .tree-row:hover { border-color: rgba(255,140,66,0.3); }
+  .s-orange .depth-0.open > .tree-row { border-color: rgba(255,140,66,0.2); }
+
+  .s-blue .section-icon { background: var(--blue-dim); }
+  .s-blue .section-title { color: var(--blue); }
+  .s-blue .depth-0 > .tree-row:hover { border-color: rgba(77,166,255,0.3); }
+  .s-blue .depth-0.open > .tree-row { border-color: rgba(77,166,255,0.2); }
+
+  .s-red .section-icon { background: var(--red-dim); }
+  .s-red .section-title { color: var(--red); }
+  .s-red .depth-0 > .tree-row:hover { border-color: rgba(255,87,87,0.3); }
+  .s-red .depth-0.open > .tree-row { border-color: rgba(255,87,87,0.2); }
+
+  .s-pink .section-icon { background: var(--pink-dim); }
+  .s-pink .section-title { color: var(--pink); }
+  .s-pink .depth-0 > .tree-row:hover { border-color: rgba(255,110,180,0.3); }
+  .s-pink .depth-0.open > .tree-row { border-color: rgba(255,110,180,0.2); }
+
+  /* CALLOUT */
+  .callout {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid;
+  }
+
+  .callout-purple { background: var(--purple-dim); border-color: rgba(155,114,255,0.2); color: var(--purple); }
+  .callout-green { background: var(--green-dim); border-color: rgba(62,207,142,0.2); color: var(--green); }
+  .callout-orange { background: var(--orange-dim); border-color: rgba(255,140,66,0.2); color: var(--orange); }
+  .callout-blue { background: var(--blue-dim); border-color: rgba(77,166,255,0.2); color: var(--blue); }
+  .callout-red { background: var(--red-dim); border-color: rgba(255,87,87,0.2); color: var(--red); }
+  .callout-pink { background: var(--pink-dim); border-color: rgba(255,110,180,0.2); color: var(--pink); }
+
+  /* EMPTY STATE */
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    display: none;
+  }
+
+  .no-results.visible { display: block; }
+  .no-results-icon { font-size: 32px; margin-bottom: 12px; }
+
+  /* ANIMATIONS */
+  .section { animation: fadeUp 0.4s ease both; }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tree-children {
+    animation: none;
+  }
+  .tree-children.animating {
+    animation: slideDown 0.2s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px 20px; }
+  }
+
+  /* SCROLLBAR MAIN */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 </style>
 </head>
-
 <body>
 
-<div class="hero">
-<h1>Guia Completo de Lançamento Pago</h1>
-<p>Do zero à escala com previsibilidade usando tráfego pago.</p>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">
+    <div class="logo-dot"></div>
+    Lançamento Pago
+  </div>
+  <div class="search-wrap">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar conteúdo...">
+  </div>
+  <div class="header-actions">
+    <button class="btn-sm" onclick="expandAll()">Expandir tudo</button>
+    <button class="btn-sm" onclick="collapseAll()">Recolher tudo</button>
+  </div>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
+    <span class="theme-label">🌙</span>
+    <div class="toggle-track">
+      <div class="toggle-knob" id="toggleKnob"></div>
+    </div>
+    <span class="theme-label">☀️</span>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Seções</div>
+    <a class="nav-item active" href="#estrategia" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--purple);box-shadow:0 0 6px var(--purple)"></div>
+      Por que Lançamento Pago?
+    </a>
+    <a class="nav-item" href="#planejamento" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+      Planejamento
+    </a>
+    <a class="nav-item" href="#pagina-vendas" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange)"></div>
+      Página de Vendas
+    </a>
+    <a class="nav-item" href="#campanhas" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--blue);box-shadow:0 0 6px var(--blue)"></div>
+      Estruturas de Campanhas
+    </a>
+    <a class="nav-item" href="#otimizacao" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--red);box-shadow:0 0 6px var(--red)"></div>
+      Otimização
+    </a>
+    <a class="nav-item" href="#metricas" onclick="setActive(this)">
+      <div class="nav-dot" style="background:var(--pink);box-shadow:0 0 6px var(--pink)"></div>
+      Métricas & Benchmarks
+    </a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Ações</div>
+    <div class="nav-item" onclick="expandAll()" style="cursor:pointer">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      Expandir tudo
+    </div>
+    <div class="nav-item" onclick="collapseAll()" style="cursor:pointer">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+      Recolher tudo
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="mainContent">
+
+    <!-- NO RESULTS -->
+    <div class="no-results" id="noResults">
+      <div class="no-results-icon">🔍</div>
+      <div>Nenhum resultado encontrado</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 1: ESTRATÉGIA -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-purple" id="estrategia">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <div>
+          <div class="section-title">Por que Lançamento Pago?</div>
+          <div class="section-desc">Estratégia, alinhamento de expectativas e fundamentos</div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        💡 O Lançamento Pago é um funil de aquisição Low Ticket com entrega ao vivo. O objetivo principal é levar o <strong>máximo de pessoas para o evento AO VIVO</strong> com compromisso e retenção — não necessariamente lucrar com os ingressos.
+      </div>
+
+      <ul class="tree" id="tree-estrategia">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">O que é de fato o Lançamento Pago?</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">É um <strong>funil de aquisição</strong> — não um lançamento comum</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Modelo: <strong>Low Ticket → Entrega Ao Vivo</strong></span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">A pergunta certa: "O projeto tem potencial para TAMBÉM fazer um Lançamento Pago?"</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">Lançamento Pago é muito melhor que o Gratuito?</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">✅ SIM — com tudo alinhado</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">A venda do ingresso traz retorno sobre o investimento</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Em grande maioria das vezes, todo o investimento é reposto ou quase todo</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">❌ NÃO — se não houver alinhamento</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Esse não é o objetivo principal do Lançamento Pago</span></div></li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Precisamos estar alinhados com muitos fatores — Alinhados com:</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Promessa forte</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Oferta do Lançamento Pago</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Bons anúncios</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Boa página de vendas de ingressos</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Resolver uma dor forte da audiência no Lançamento Pago</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Etc.</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mesmo que NÃO volte todo o investimento, o objetivo é levar o LEAD para o evento com mais compromisso e retenção</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Objetivo do LP = levar o MÁXIMO de pessoas para estar AO VIVO com o especialista</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Não buscamos LUCRO com a venda dos ingressos — mesmo que seja totalmente possível</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">O que É e o que NÃO É o Lançamento Pago?</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">🚫 NÃO É...</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Apenas uma forma de ter o retorno do tráfego</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O único método de lançamento para ser usado por um cliente</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Um modelo de lançamento para testar parceria ou validar produto</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Igual a um lançamento gratuito só que pago</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">✅ É...</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Um produto</strong> — por isso a entrega tem que ser muito boa</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Um dos primeiros produtos de aquisição dos clientes</strong> — por isso a entrega tem que ser muito boa</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Uma forma de melhorar o ROAS dos funis de venda que usam o Lançamento como aquisição — <strong>por isso a entrega tem que ser muito boa</strong></span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">O que faz um Lançamento Pago ser RUIM?</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">⚠️ Fator principal: A PROMESSA</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Não comece com a mesma promessa de um Lançamento Gratuito</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se isso acontecer, existe grandes chances de ser ruim ou com resultados menores do que poderiam ser</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">A PROMESSA deve ser de um produto, com entregável, com transformação real e palpável nos dias que ele acontece</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Lembrem-se: é um ingresso para um evento, um ingresso barato — mas é um produto. Trate-o como produto, desde a promessa até a entrega</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">Por que fazer um Lançamento Pago?</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">É um ótimo modelo de aquisição de clientes</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">É uma das formas de ter aquisição de clientes com CAC praticamente zero</span></div></li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Porque traz...</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">📅 Previsibilidade</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">🧠 Saúde Mental</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">💰 Fluxo de Caixa</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">📝 Muito mais conteúdo do que copy</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Traz para o LEAD muito tempo de tela</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Traz para o projeto muita retenção e comparecimento</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O LEAD fica muito mais qualificado depois disso, possibilitando converter mais público frio do que no lançamento gratuito</span></div></li>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 2: PLANEJAMENTO -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-green" id="planejamento">
+      <div class="section-header">
+        <div class="section-icon">📋</div>
+        <div>
+          <div class="section-title">Planejamento</div>
+          <div class="section-desc">Calendário e checklist para iniciar</div>
+        </div>
+      </div>
+
+      <ul class="tree">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">📅 Calendário</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Definir datas do evento ao vivo</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Planejar período de vendas de ingressos</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Estabelecer timeline de produção dos materiais</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">✅ Checklist para Iniciar</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">🎟️ Produto (Ingressos)</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Definir a promessa do evento</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Criar a estrutura de entrega</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Configurar checkout e plataforma de pagamento</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">📦 Order Bump</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Gravação em formato de aulas</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Planilhas, ebook, aulas complementares</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">🖥️ Página de Vendas</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">⚙️ Automações</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">📢 Anúncios</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">📈 Tráfego</span></div></li>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 3: PÁGINA DE VENDAS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-orange" id="pagina-vendas">
+      <div class="section-header">
+        <div class="section-icon">🛒</div>
+        <div>
+          <div class="section-title">Página de Vendas</div>
+          <div class="section-desc">Estrutura completa para converter visitantes em compradores</div>
+        </div>
+      </div>
+
+      <div class="callout callout-orange">
+        🔑 A promessa é a única coisa que realmente importa para vender ingressos. É o motivo pelo qual a pessoa vai querer comprar e dedicar o tempo necessário.
+      </div>
+
+      <ul class="tree">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">1. Hero / Primeira Dobra</span>
+            <span class="tree-badge" style="background:var(--orange-dim);color:var(--orange)">Topo</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Promessa</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O sucesso da venda de ingressos está aqui — a promessa é a única coisa que realmente importa</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">É o motivo pelo qual a pessoa vai querer comprar o ingresso e dedicar o tempo necessário</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Fazer as pessoas entenderem que estão construindo algo concreto</span></div></li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Diferença Gratuito vs Pago na promessa</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item depth-0">
+                      <div class="tree-row has-children" onclick="toggle(this)">
+                        <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                        <span class="tree-label">🆓 Gratuito (linguagem aberta)</span>
+                      </div>
+                      <ul class="tree-children">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Descubra..."</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"O passo a passo para..."</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Aprenda..."</span></div></li>
+                      </ul>
+                    </li>
+                    <li class="tree-item depth-0">
+                      <div class="tree-row has-children" onclick="toggle(this)">
+                        <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                        <span class="tree-label">💰 Pago (linguagem de entregável)</span>
+                      </div>
+                      <ul class="tree-children">
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Em 2 dias crie [algo que tem muito valor para o seu ICP]"</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Crie o plano que..."</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Dois dias criando um plano que vai..."</span></div></li>
+                        <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Dois dias para aprender e criar o seu..."</span></div></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">🔴 Lote / Escassez — urgência de compra</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">2. Fundamentação da Proposta</span>
+            <span class="tree-badge" style="background:var(--orange-dim);color:var(--orange)">Meio</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Objetivo:</strong> mostrar que o que você prometeu faz sentido</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Explica por que essa estratégia funciona</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mostra dados ou argumentos</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Compara com alternativas</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Contextualiza o mercado</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">3. Conexão com o Público</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Objetivo:</strong> fazer a pessoa se reconhecer</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Dor — qual dor estão sentindo?</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Desejo — o que desejam alcançar?</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Momento de vida — onde estão agora?</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Situação profissional — contexto atual</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">4. Estrutura da Entrega</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Objetivo:</strong> detalhar o que será entregue</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O que a pessoa vai aprender</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">É a materialização da promessa</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row" onclick="toggle(this)">
+            <span class="tree-spacer"></span>
+            <span class="tree-label">5. Cronograma — agenda detalhada dos dias do evento</span>
+          </div>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">6. Depoimentos</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Preferencialmente de lançamentos pagos anteriores</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">7. Oferta</span>
+            <span class="tree-badge" style="background:var(--orange-dim);color:var(--orange)">Conversão</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label"><strong>Objetivo:</strong> ancorar valor</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mostra o valor percebido</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Compara com o custo real</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mostra o que está incluso</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Apresenta o investimento final</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row" onclick="toggle(this)">
+            <span class="tree-spacer"></span>
+            <span class="tree-label">8. Garantia</span>
+          </div>
+        </li>
+        <li class="tree-item depth-0">
+          <div class="tree-row" onclick="toggle(this)">
+            <span class="tree-spacer"></span>
+            <span class="tree-label">9. Quem sou eu — autoridade e credibilidade</span>
+          </div>
+        </li>
+        <li class="tree-item depth-0">
+          <div class="tree-row" onclick="toggle(this)">
+            <span class="tree-spacer"></span>
+            <span class="tree-label">10. Depoimentos (reforço)</span>
+          </div>
+        </li>
+        <li class="tree-item depth-0">
+          <div class="tree-row" onclick="toggle(this)">
+            <span class="tree-spacer"></span>
+            <span class="tree-label">11. FAQ — perguntas frequentes</span>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 4: CAMPANHAS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-blue" id="campanhas">
+      <div class="section-header">
+        <div class="section-icon">📢</div>
+        <div>
+          <div class="section-title">Estruturas de Campanhas</div>
+          <div class="section-desc">Métricas históricas, metas, testes e escala</div>
+        </div>
+      </div>
+
+      <ul class="tree">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">📊 Métricas Históricas</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Antes de tudo, faça levantamento de métricas históricas do projeto:</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">CPM, CTR, Connect Rate, Taxa de avanço para o checkout</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Taxa de conversão de checkout, Taxa de conversão de página, Custo por venda</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🎯 Metas</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Investimento total planejado</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Custo por venda desejado</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Pace diário de vendas e investimento</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Volume de vendas esperado</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Meta de investimento / vendas Quentes e Frios</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🧪 Teste de Criativo — Público Frio (F)</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">TIPO 1 — Campanha ADV+ Purchase</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Configurar público engajado → Lista de leads prévios do cliente (lista e pixel)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Configurar público cliente → Alunos (lista e pixel)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Um conjunto com todos os criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Subir uns 50 ads a cada 1000 reais de investimento diário (Adequar à realidade: 10 ads = coloca uns 100 reais dia)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Nas primeiras 24h teremos noção de quais são os melhores criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Nas 48h teremos certeza dos bons criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Deixar rodando todos criativos que custo não estiver horrível (se campanha estiver com custo por venda bom) — pois passado alguns dias outros criativos podem se mostrar promissores</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">⚠️ Atenção para não estourar investimento em público frio deixando campanha ativa</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Primeira campanha criada normalmente tem bons resultados. As demais, nem tanto.</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">TIPO 2 — Campanha ADV+ Purchase (isola criativo por conjunto)</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Igual TIPO 1, porém isola criativo por conjunto</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Divide o CPA meta por 3, deixa rodar por três dias</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se no dia 1 e 2 se mostrar muito ruim já mata</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Para analisar se está ruim, compare as métricas secundárias como CTR, CPM...</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🔥 Campanha ABO — Público Quente (Q)</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mix de público quente: Env 365, seguidores, page view, lista de leads, todos públicos possíveis</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">1 criativo por conjunto</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🧪 Teste de Público — Campanha ABO</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">1 público por conjunto</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Criativos validados</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">📈 Escala Público Quente</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Se tem histórico</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Começar campanha com melhores criativos histórico</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Começar campanha com melhores públicos histórico</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Se não tem histórico</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Usar criativos que você acredita ser os melhores</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Usar públicos que você acredita serem os mais óbvios de darem certo</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">❄️ Escala Público Frio</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Se tem histórico</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Começar campanha com melhores criativos histórico</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Começar campanha com melhores públicos histórico</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Se não tem histórico</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Usar criativos que você acredita ser os melhores</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Usar público Advantage</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🏗️ Estrutura Escala PQ 1</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">00 - Pg view captura 30D + VV 15s ads do launch atual</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">01 - Lista de leads</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">02 - Enviou msg 60d, salvou 60d, IC 60d</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">03 - 7d env + VV 7D</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">04 - 30d env + VV 30D</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">05 - 60d env + VV 60D</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">06 - 180d env + VV 180D</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Campanha CBO</span></div></li>
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">6 criativos ativos</span></div></li>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 5: OTIMIZAÇÃO -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-red" id="otimizacao">
+      <div class="section-header">
+        <div class="section-icon">⚡</div>
+        <div>
+          <div class="section-title">Otimização</div>
+          <div class="section-desc">Métricas do funil, campanhas em escala e problemas & soluções</div>
+        </div>
+      </div>
+
+      <div class="callout callout-red">
+        ⚠️ Você precisa estar atento às métricas básicas do funil de tráfego: CPM, CTR, Connect Rate, Taxa de avanço para o checkout, Taxa de conversão de checkout, Taxa de conversão de página e Custo por venda.
+      </div>
+
+      <ul class="tree">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">📋 Campanhas ADV+ Purchase e MIX Quente — Acompanhamento</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Teste de Criativos</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Subir uma campanha inicial para testar criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">24h: já sabemos potenciais criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">48h: temos certeza dos bons criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Os criativos que derem bom, vamos dando preferência para subir para escala</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Deixa rodando — porque em seguida outros criativos aparecem como potenciais</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se recebermos novos criativos → Cria-se nova estrutura igual a anterior</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Acompanhar todos os dias</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Verificar custo por venda</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Verificar valor investido</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Acompanhar CPM, CTR, Connect Rate, Taxa de avanço ao checkout, taxa de conversão de checkout, Taxa de conversão da página</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">⚙️ Otimizações — Campanhas em Escala</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Orçamento</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Todo dia que fizer sentido</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mudanças em média de 15% - 20%</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Criativo</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">A cada 2 dias em média (se investimento e volume de vendas muito baixo, talvez 3 dias)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Período de análise: Dia atual + 2 últimos dias</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Analisar cada conjunto</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Verificar o que trouxe venda cara</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">1º Pausar 2 piores de cada conjunto de todas as campanhas de escala</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">2º Colar em todos conjuntos que tiveram criativos desativados, os 2 melhores criativos 'novos validados'</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Público</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">A cada 3 dias em média (se investimento e volume de vendas muito baixo, talvez 4 dias)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Período de análise: Dia atual + 2 últimos dias (pode dar uma olhada nos últimos 3-4 como auxiliar)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se público estava bom e ficou ruim, vale verificar se as otimizações de criativos foram feitas todas</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Analisar cada conjunto</span></div></li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Campanhas CBO</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Pausar no máximo 20% dos conjuntos de estruturas de escala</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Entrar com outros</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Reajustar hierarquia</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Cuidar tamanhos de públicos e qualidade de públicos ao entrar com novos públicos</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Campanhas ABO Sem hierarquia</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se tá ruim, desativa</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Entra com outro para teste no lugar</span></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Estrutura (última opção)</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mudar quando estiver ruim e já tivermos tentado de tudo em criativo e público</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Criar campanhas CBO sem hierarquia</span></div></li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Criar campanhas separado por posicionamento</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Campanha Stories</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Campanha Feed</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Campanha Reels</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar separar IG/FB</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar campanhas separando Vídeo/Imagem</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Teste de Página</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Quando o cliente disponibilizar</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Utilizar melhor público, melhores criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Criar campanha para testar a página nova</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Pode ser uma campanha com um público (o melhor) ou campanha com alguns públicos (os melhores)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">AR — Sempre criar campanhas exatamente iguais para teste</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🔧 Problemas e Soluções — Análise de funil por métrica</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">CPM ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Testar novos públicos (principalmente maiores)</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Públicos Abertos: Advantage, Sem segmentação, Mix com todos públicos quentes da conta</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar novos criativos — Maior qualidade de criativo baixa CPM</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar outras fontes de tráfego</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Verificar frequência</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">CTR ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar novos criativos</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar novos ganchos de criativos (3 seg iniciais principalmente)</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Avaliar se promessa conversa com o público alvo</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Connect Rate ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Chamar time de site do cliente e pedir análise de velocidade de página</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Sugerir diminuir tamanho de imagens e afins para deixar site leve</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Sugerir utilizar outra hospedagem ou plataforma (WordPress)</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Taxa de avanço para o checkout ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Melhorar Headline</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Testar outras promessas</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Mostrar valor antes de mostrar preço</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Colocar mais provas</span></div></li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Melhorar clareza da proposta</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Fature com tráfego pago" — vago</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">"Fature 10 mil reais por mês com tráfego pago, começando do zero" — específico</span></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Conversão de checkout ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Ancoragem Forte: Mostrar valor cheio riscado, Comparar com algo ("menos que 1 pizza...")</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Destacar parcelamento</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Deixar garantia visível</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Reforço de Benefício Dentro do Checkout</span></div></li>
+                <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Prova Social no Checkout</span></div></li>
+              </ul>
+            </li>
+            <li class="tree-item depth-0">
+              <div class="tree-row has-children" onclick="toggle(this)">
+                <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                <span class="tree-label">Conversão de página ruim?</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Melhorar headline (deixar mais específica)</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Nada específica: "Aprenda a vender mais"</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Bem específica: "Como sair de 10 para 40 vendas por dia sem aumentar orçamento"</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Ampliar clareza da copy</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Para quem é?</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Qual problema resolve?</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Qual resultado promete?</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Prova Antes de Preço</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Prints, Depoimentos, Número de alunos, Resultados de alunos</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Testar páginas diferentes</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Uma com mais foca na dor</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Uma com mais foca em desejos</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Uma com foca mais emocional</span></div></li>
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Uma com foca mais racional</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Ampliar alinhamento com anúncio</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Se o criativo promete X e a página começa falando Y → A conversão despenca</span></div></li>
+                  </ul>
+                </li>
+                <li class="tree-item depth-0">
+                  <div class="tree-row has-children" onclick="toggle(this)">
+                    <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+                    <span class="tree-label">Melhorar oferta</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O que podemos entregar / adicionar que torna a oferta mais atrativa?</span></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SEÇÃO 6: MÉTRICAS & BENCHMARKS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <section class="section s-pink" id="metricas">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <div>
+          <div class="section-title">Métricas & Benchmarks</div>
+          <div class="section-desc">Indicadores e classificações para Lançamento Pago</div>
+        </div>
+      </div>
+
+      <div class="callout callout-pink">
+        📌 Ingressos por Lançamento: o número de ingressos vendidos normalmente corresponde a <strong>1% a 5% dos seguidores</strong> da conta.
+      </div>
+
+      <ul class="tree">
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🛒 Conversão de Checkout</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table" style="width:100%">
+                <tr><th>Conversão</th><th>Classificação</th></tr>
+                <tr><td>40%+</td><td><span class="status-pill status-lindo">✨ Ótimo</span></td></tr>
+                <tr><td>32% a 39%</td><td><span class="status-pill status-otimo">Muito Bom</span></td></tr>
+                <tr><td>26% a 31%</td><td><span class="status-pill status-bom">Bom</span></td></tr>
+                <tr><td>21% a 25%</td><td><span class="status-pill status-ok">Ok</span></td></tr>
+                <tr><td>18% a 20%</td><td><span class="status-pill status-ruim">Ruim</span></td></tr>
+                <tr><td>Até 17%</td><td><span class="status-pill status-ruim">Muito Ruim</span></td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">📦 Order Bumps / Gravações — Conversão</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">Conversão varia entre <strong>10% a 20%</strong></span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">💰 CPA (Custo por Aquisição)</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span><span class="tree-label">O CPA varia de <strong>5x a 10x</strong> o custo do lead gratuito da conta</span></div></li>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🖥️ Conversão de Página de Vendas</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table">
+                <tr><th>Conversão</th><th>Classificação</th></tr>
+                <tr><td>8% a 12%</td><td><span class="status-pill status-otimo">Ótimo</span></td></tr>
+                <tr><td>7% a 8%</td><td><span class="status-pill status-bom">Bom</span></td></tr>
+                <tr><td>5% a 7%</td><td><span class="status-pill status-ok">Ok</span></td></tr>
+                <tr><td>2% a 4%</td><td><span class="status-pill status-ruim">Ruim</span></td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🔗 Connect Rate</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table">
+                <tr><th>Connect Rate</th><th>Classificação</th></tr>
+                <tr><td>81%+</td><td><span class="status-pill status-otimo">Ótimo</span></td></tr>
+                <tr><td>75% a 80%</td><td><span class="status-pill status-otimo">Muito Bom</span></td></tr>
+                <tr><td>69% a 75%</td><td><span class="status-pill status-bom">Bom</span></td></tr>
+                <tr><td>61% a 68%</td><td><span class="status-pill status-ok">OK</span></td></tr>
+                <tr><td>55% a 60%</td><td><span class="status-pill status-ruim">Ruim</span></td></tr>
+                <tr><td>Abaixo de 54%</td><td><span class="status-pill status-ruim">Muito Ruim</span></td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">👆 CTR (Click-Through Rate)</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table">
+                <tr><th>CTR</th><th>Classificação</th></tr>
+                <tr><td>1.8% ou mais</td><td><span class="status-pill status-lindo">✨ Lindo</span></td></tr>
+                <tr><td>1.5% a 1.7%</td><td><span class="status-pill status-otimo">Ótimo</span></td></tr>
+                <tr><td>1.2% a 1.4%</td><td><span class="status-pill status-otimo">Muito Bom</span></td></tr>
+                <tr><td>0.9% a 1.1%</td><td><span class="status-pill status-bom">Bom</span></td></tr>
+                <tr><td>0.7% a 0.8%</td><td><span class="status-pill status-ok">OK</span></td></tr>
+                <tr><td>0.5% a 0.6%</td><td><span class="status-pill status-ruim">Ruim</span></td></tr>
+                <tr><td>Abaixo de 0.4%</td><td><span class="status-pill status-ruim">Muito Ruim</span></td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">💸 CPM (Custo por Mil Impressões)</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table">
+                <tr><th>CPM</th><th>Classificação</th></tr>
+                <tr><td>R$11 a R$20</td><td><span class="status-pill status-otimo">Ótimo</span></td></tr>
+                <tr><td>R$21 a R$40</td><td><span class="status-pill status-otimo">Muito Bom</span></td></tr>
+                <tr><td>R$41 a R$60</td><td><span class="status-pill status-bom">Bom</span></td></tr>
+                <tr><td>R$61 a R$80</td><td><span class="status-pill status-ok">Difícil</span></td></tr>
+                <tr><td>R$81 a R$100+</td><td><span class="status-pill status-ruim">Muito Difícil</span></td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+        <li class="tree-item depth-0">
+          <div class="tree-row has-children" onclick="toggle(this)">
+            <span class="tree-toggle"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M3 2l4 3-4 3V2z"/></svg></span>
+            <span class="tree-label">🎟️ Conversão de Ingressos por Ticket do Produto</span>
+          </div>
+          <ul class="tree-children">
+            <li class="tree-item"><div class="tree-row"><span class="tree-spacer"></span>
+              <table class="bench-table">
+                <tr><th>Ticket</th><th>Conversão de Ingresso</th></tr>
+                <tr><td>R$1k a R$1.5k</td><td>15% a 20%</td></tr>
+                <tr><td>R$1.5k a R$2k</td><td>10% a 15%</td></tr>
+                <tr><td>R$2k a R$3k</td><td>8% a 10%</td></tr>
+                <tr><td>R$3k a R$5k</td><td>6% a 8%</td></tr>
+                <tr><td>R$5k a R$10k</td><td>4% a 6%</td></tr>
+                <tr><td>R$10k ou mais</td><td>3% a 5%</td></tr>
+              </table>
+            </span></div>
+          </ul>
+        </li>
+
+      </ul>
+    </section>
+
+  </main>
 </div>
 
-<!-- FUNDAMENTOS -->
-<div class="section">
-<h2>Fundamentos</h2>
+<script>
+  // TOGGLE TREE NODES
+  function toggle(row) {
+    const children = row.parentElement.querySelector('.tree-children');
+    if (!children) return;
+    const isOpen = row.classList.contains('open');
+    if (isOpen) {
+      row.classList.remove('open');
+      children.classList.remove('open');
+    } else {
+      row.classList.add('open');
+      children.classList.add('open', 'animating');
+      setTimeout(() => children.classList.remove('animating'), 300);
+    }
+  }
 
-<div class="card purple">
-<strong>O que é</strong>
-<p>Um funil de aquisição com tráfego pago, normalmente com low ticket + evento ao vivo.</p>
-</div>
+  // EXPAND / COLLAPSE ALL
+  function expandAll() {
+    document.querySelectorAll('.tree-row.has-children').forEach(r => r.classList.add('open'));
+    document.querySelectorAll('.tree-children').forEach(c => c.classList.add('open'));
+  }
 
-<div class="card purple">
-<strong>O que NÃO é</strong>
-<ul>
-<li>Não é focado em lucro imediato</li>
-<li>Não é só venda direta</li>
-<li>Não substitui backend</li>
-</ul>
-</div>
+  function collapseAll() {
+    document.querySelectorAll('.tree-row').forEach(r => r.classList.remove('open'));
+    document.querySelectorAll('.tree-children').forEach(c => c.classList.remove('open'));
+  }
 
-<div class="card purple">
-<strong>Alinhamento</strong>
-<ul>
-<li>Promessa</li>
-<li>Oferta</li>
-<li>Anúncios</li>
-<li>Página</li>
-<li>Dor do público</li>
-</ul>
-</div>
+  // SIDEBAR ACTIVE
+  function setActive(el) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
 
-</div>
+  // INTERSECTION OBSERVER for auto-active sidebar
+  const sections = document.querySelectorAll('.section');
+  const navItems = document.querySelectorAll('.nav-item[href]');
 
-<!-- PLANEJAMENTO -->
-<div class="section">
-<h2>Planejamento</h2>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px' });
 
-<div class="card green">
-<ul>
-<li>Calendário</li>
-<li>Produto (low ticket)</li>
-<li>Order bump</li>
-<li>Página de vendas</li>
-<li>Automação</li>
-<li>Anúncios</li>
-<li>Tráfego</li>
-</ul>
-</div>
+  sections.forEach(s => observer.observe(s));
 
-</div>
+  // SEARCH
+  const searchInput = document.getElementById('searchInput');
+  const noResults = document.getElementById('noResults');
 
-<!-- PÁGINA -->
-<div class="section">
-<h2>Página de Vendas</h2>
+  searchInput.addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
 
-<div class="card orange">
-<ul>
-<li>Promessa clara</li>
-<li>Diferença gratuito vs pago</li>
-<li>Conexão com público</li>
-<li>Estrutura de entrega</li>
-<li>Provas</li>
-<li>Oferta</li>
-<li>Garantia</li>
-<li>FAQ</li>
-</ul>
-</div>
+    // Remove previous highlights
+    document.querySelectorAll('.highlight').forEach(el => {
+      el.outerHTML = el.textContent;
+    });
 
-</div>
+    if (!q) {
+      document.querySelectorAll('.section, .tree-item').forEach(el => el.classList.remove('search-hidden'));
+      noResults.classList.remove('visible');
+      collapseAll();
+      return;
+    }
 
-<!-- CAMPANHAS -->
-<div class="section">
-<h2>Estrutura de Campanhas</h2>
+    // Expand all for search
+    expandAll();
 
-<div class="card blue">
-<ul>
-<li>ABO para teste</li>
-<li>CBO para escala</li>
-<li>Testar criativos constantemente</li>
-<li>Separar público quente e frio</li>
-<li>Escalar vencedores</li>
-</ul>
-</div>
+    let anyVisible = false;
 
-</div>
+    document.querySelectorAll('.tree-item').forEach(item => {
+      const label = item.querySelector('.tree-label');
+      if (!label) return;
+      const text = label.textContent.toLowerCase();
+      if (text.includes(q)) {
+        item.classList.remove('search-hidden');
+        // Highlight
+        const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+        label.innerHTML = label.textContent.replace(regex, '<span class="highlight">$1</span>');
+        anyVisible = true;
+      } else {
+        // Only hide leaf nodes (no children)
+        if (!item.querySelector('.tree-children')) {
+          item.classList.add('search-hidden');
+        }
+      }
+    });
 
-<!-- OTIMIZAÇÃO -->
-<div class="section">
-<h2>Otimização</h2>
+    noResults.classList.toggle('visible', !anyVisible);
+  });
 
-<div class="grid">
-<div class="card red"><strong>Criativos</strong></div>
-<div class="card red"><strong>Público</strong></div>
-<div class="card red"><strong>Página</strong></div>
-<div class="card red"><strong>Funil</strong></div>
-</div>
+  // THEME TOGGLE
+  function toggleTheme() {
+    const html = document.documentElement;
+    const knob = document.getElementById('toggleKnob');
+    const isLight = html.classList.toggle('light');
+    knob.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('lp-theme', isLight ? 'light' : 'dark');
+  }
 
-<div class="card red">
-<ul>
-<li>Testar novos criativos diariamente</li>
-<li>Analisar CTR e CPM</li>
-<li>Melhorar promessa</li>
-<li>Testar páginas diferentes</li>
-<li>Melhorar oferta</li>
-</ul>
-</div>
-
-</div>
-
-<!-- MÉTRICAS -->
-<div class="section">
-<h2>Métricas e Benchmarks</h2>
-
-<div class="card pink">
-<strong>Conversão Checkout</strong>
-<table>
-<tr><td>40%+</td><td>Ótimo</td></tr>
-<tr><td>32%–39%</td><td>Muito bom</td></tr>
-<tr><td>26%–31%</td><td>Bom</td></tr>
-<tr><td>21%–25%</td><td>OK</td></tr>
-<tr><td>18%–20%</td><td>Ruim</td></tr>
-<tr><td>Até 17%</td><td>Muito ruim</td></tr>
-</table>
-</div>
-
-<div class="card pink">
-<strong>CTR</strong>
-<table>
-<tr><td>1.8%+</td><td>Excelente</td></tr>
-<tr><td>1.5%–1.7%</td><td>Ótimo</td></tr>
-<tr><td>1.2%–1.4%</td><td>Muito bom</td></tr>
-<tr><td>0.9%–1.1%</td><td>Bom</td></tr>
-<tr><td>0.7%–0.8%</td><td>OK</td></tr>
-<tr><td>0.5%–0.6%</td><td>Ruim</td></tr>
-<tr><td><0.4%</td><td>Muito ruim</td></tr>
-</table>
-</div>
-
-<div class="card pink">
-<strong>CPM</strong>
-<table>
-<tr><td>R$11–20</td><td>Ótimo</td></tr>
-<tr><td>R$21–40</td><td>Muito bom</td></tr>
-<tr><td>R$41–60</td><td>Bom</td></tr>
-<tr><td>R$61–80</td><td>Difícil</td></tr>
-<tr><td>R$81+</td><td>Muito difícil</td></tr>
-</table>
-</div>
-
-<div class="card pink">
-<strong>Connect Rate</strong>
-<table>
-<tr><td>81%+</td><td>Ótimo</td></tr>
-<tr><td>75–80%</td><td>Muito bom</td></tr>
-<tr><td>69–75%</td><td>Bom</td></tr>
-<tr><td>61–68%</td><td>OK</td></tr>
-<tr><td>55–60%</td><td>Ruim</td></tr>
-<tr><td><54%</td><td>Muito ruim</td></tr>
-</table>
-</div>
-
-<div class="card pink">
-<strong>Conversão Página</strong>
-<table>
-<tr><td>8–12%</td><td>Ótimo</td></tr>
-<tr><td>7–8%</td><td>Bom</td></tr>
-<tr><td>5–7%</td><td>OK</td></tr>
-<tr><td>2–4%</td><td>Ruim</td></tr>
-</table>
-</div>
-
-<div class="card pink">
-<strong>Ticket vs Conversão</strong>
-<table>
-<tr><td>1k–1.5k</td><td>15%–20%</td></tr>
-<tr><td>1.5k–2k</td><td>10%–15%</td></tr>
-<tr><td>2k–3k</td><td>8%–10%</td></tr>
-<tr><td>3k–5k</td><td>6%–8%</td></tr>
-<tr><td>5k–10k</td><td>4%–6%</td></tr>
-<tr><td>10k+</td><td>3%–5%</td></tr>
-</table>
-</div>
-
-</div>
-
-<div class="footer">
-Guia de Lançamento Pago — 2026
-</div>
-
+  // Restore saved theme (default: light)
+  (function() {
+    const saved = localStorage.getItem('lp-theme');
+    const knob = document.getElementById('toggleKnob');
+    if (saved === 'dark') {
+      document.documentElement.classList.remove('light');
+      knob.textContent = '🌙';
+    } else {
+      document.documentElement.classList.add('light');
+      knob.textContent = '☀️';
+    }
+  })();
+</script>
 </body>
 </html>
